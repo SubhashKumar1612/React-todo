@@ -2,6 +2,7 @@
 
 import Todo from "../Todo/Todo";
 import { useSelector } from "react-redux";
+import './TodoList.css';
 
 
 function TodoList({editTodo, DeleteTodo,todofinshed}){
@@ -23,18 +24,24 @@ function TodoList({editTodo, DeleteTodo,todofinshed}){
 
    
     return(
-        <div>
-            {list.length > 0 && 
-            list.map(todo => <Todo 
-                                  key={todo.id}
-                                  id={todo.id}
-                                  isFinished={todo.finished}
-                                  todoData={todo.todoData}
-                                  changeFinished={(isFinished)=>onFinished(todo,isFinished)}
-                                  onDelete={()=>onDelete(todo)}
-                                  onEdit={(todoText)=>onEdit(todo,todoText)}
-                                  />)}
-        </div>  
+      <ul className="todo-list-container">
+      {list.length > 0 ? (
+          list.map(todo => (
+              <li key={todo.id} className={todo.finished ? "finished" : ""}>
+                  <Todo 
+                      id={todo.id}
+                      isFinished={todo.finished}
+                      todoData={todo.todoData}
+                      changeFinished={(isFinished) => onFinished(todo, isFinished)}
+                      onDelete={() => onDelete(todo)}
+                      onEdit={(todoText) => onEdit(todo, todoText)}
+                  />
+              </li>
+          ))
+      ) : (
+          <li>No todos available</li>
+      )}
+  </ul>
     )
 }
 export default TodoList;
